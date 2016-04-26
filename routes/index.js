@@ -24,20 +24,22 @@ router.get('/', function(req, res, next) {
 	// 2. Get the current user from mongo
 	var currIP = req.ip;
 	console.log("The current user's IP address is " + currIP);
+
 	db.collection('users').find({ip: currIP}).toArray(function(error, userResult){
 		//if the user result returns nothing, then the user hasn't voted on anything.
 			// 4. load all docs into an array
 		if(userResult.length == 0){
-		photosToShow = allPhotos;
+			photosToShow = allPhotos;
+		}else{
+			photosToShow = allPhotos;
 		}
 		// 5. pick a random one
 		var getRandomImage = Math.floor(Math.random() * photosToShow.length);
-		// 6. send the random pic to the view.
 		res.render('index', { carImage: allPhotos[getRandomImage] });
 
 	});
 	// 3. find out which pics the user has voted on.
-	
+	// 6. send the random pic to the view.
 	// var cars = db.collection('cars').insert({name: 'Buick'});
 	// db.collection('cars').find({}).toArray(function(error, carResult){
 	// 	console.log(carResult);
@@ -56,19 +58,29 @@ router.get('/', function(req, res, next) {
 router.post('/electric', function(req, res, next){
 	//res.send(req.body);
 
-	db.collection('cars').updateOne(
+	db.collection('users').insertOne({
+		ip: req.ip,
+		vote: 'electric',
+		image: req.body.photo
+	});
+
+	db.collection('cars').find({imageSrc: req.body.photo}).toArray(function(error, result){
+		if(isNaN(result[0].totalVotes)){
+			total=0;
+		}else{
+			total = result[0].totalVotes;
+		}
+		db.collection('cars').updateOne(
 		{imageSrc: req.body.photo},
 		{
-			$set: {"totalVotes": 1}
+			$set: {"totalVotes": (total + 1) }
 		}, function(error, results){
-			console.log(results);
+			// console.log(results);
 		}
-	)
+	);
+	})
 	
-
-
-
-	res.send("The user chose " + req.body.photo + " as an electric vehicle.")
+	res.redirect('/');
 
 	// 1. We know they voted electric or they wouldn't be here.
 	// 2. we know what they voted on bc we passed it in the req.body var
@@ -81,7 +93,31 @@ router.post('/electric', function(req, res, next){
 
 router.post('/notElectric', function(req, res, next){
 	//res.send(req.body);
-	res.send("The user chose " + req.body.photo + " as a not an electric vehicle.")
+	db.collection('users').insertOne({
+		ip: req.ip,
+		vote: 'notElectric',
+		image: req.body.photo
+	});
+
+	db.collection('cars').find({imageSrc: req.body.photo}).toArray(function(error, result){
+		if(isNaN(result[0].totalVotes)){
+			total=0;
+		}else{
+			total = result[0].totalVotes;
+		}
+		db.collection('cars').updateOne(
+		{imageSrc: req.body.photo},
+		{
+			$set: {"totalVotes": (total + 1) }
+		}, function(error, results){
+			// console.log(results);
+		}
+	);
+	})
+	
+	res.redirect('/');
+
+	// res.send("The user chose " + req.body.photo + " as a not an electric vehicle.")
 	// 1. We know they voted electric or they wouldn't be here.
 	// 2. we know what they voted on bc we passed it in the req.body var
 	// 3. we know who they are bc of their IP
