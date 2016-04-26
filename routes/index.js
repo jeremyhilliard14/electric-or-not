@@ -32,11 +32,12 @@ router.get('/', function(req, res, next) {
 		}
 		// 5. pick a random one
 		var getRandomImage = Math.floor(Math.random() * photosToShow.length);
+		// 6. send the random pic to the view.
 		res.render('index', { carImage: allPhotos[getRandomImage] });
 
 	});
 	// 3. find out which pics the user has voted on.
-	// 6. send the random pic to the view.
+	
 	// var cars = db.collection('cars').insert({name: 'Buick'});
 	// db.collection('cars').find({}).toArray(function(error, carResult){
 	// 	console.log(carResult);

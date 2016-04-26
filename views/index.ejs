@@ -11,11 +11,11 @@
 	</div>
 
 	<div id="button-holder">
-		<form class="vote-button" action="./electric" method="post">
+		<form class="vote-button" action="electric" method="post">
 			<input type="hidden" name="photo" value="<%= carImage.imageSrc %>">
 			<input type="submit" name="submit" class="btn btn-info" value="Electric!">
 		</form>
-		<form class="vote-button" action="./notElectric" method="post">
+		<form class="vote-button" action="notElectric" method="post">
 			<input type="hidden" name="photo" value="<%= carImage.imageSrc %>">
 			<input type="submit" name="submit" class="btn btn-info" value="Not Electric!">
 		</form>

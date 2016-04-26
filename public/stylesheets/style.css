@@ -1,6 +1,6 @@
 /* line 1, ../../compass/sass/_index.scss */
 body {
-  background-color: green;
+  background-color: black;
   color: white;
 }
 
@@ -8,4 +8,9 @@ body {
 img {
   height: 350px;
   width: auto;
+}
+
+/* line 1, ../../compass/sass/_nav.scss */
+.navbar {
+  color: black;
 }
