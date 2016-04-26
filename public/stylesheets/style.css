@@ -1,4 +1,11 @@
-/* line 1, ../../compass/sass/_home.scss */
+/* line 1, ../../compass/sass/_index.scss */
 body {
   background-color: green;
+  color: white;
+}
+
+/* line 7, ../../compass/sass/_index.scss */
+img {
+  height: 350px;
+  width: auto;
 }
