@@ -8,12 +8,7 @@ var db;
 var allPhotos;
 
 mongoClient.connect(mongoUrl, function(error, database){
-	database.collection('cars').find().toArray(function(error, result){
-		allPhotos = result;
-		db = database;
-		console.log(allPhotos);
-	});
-	
+	db = database;
 });
 
 /* GET home page. */
@@ -23,20 +18,41 @@ router.get('/', function(req, res, next) {
 	// this takes place when we connect
 	// 2. Get the current user from mongo
 	var currIP = req.ip;
-	console.log("The current user's IP address is " + currIP);
+	// console.log("The current user's IP address is " + currIP);
 
 	db.collection('users').find({ip: currIP}).toArray(function(error, userResult){
-		//if the user result returns nothing, then the user hasn't voted on anything.
-			// 4. load all docs into an array
-		if(userResult.length == 0){
-			photosToShow = allPhotos;
-		}else{
-			photosToShow = allPhotos;
-		}
-		// 5. pick a random one
-		var getRandomImage = Math.floor(Math.random() * photosToShow.length);
-		res.render('index', { carImage: allPhotos[getRandomImage] });
+		var photosVoted = [];
 
+		for(i=0; i<userResult.length; i++){
+			photosVoted.push(userResult[i].image);
+		}
+
+		//produce from cars all the images that the user that has not voted on.
+		db.collection('cars').find({imageSrc: {$nin: photosVoted}}).toArray(function(error, photosToShow){
+			
+			if(photosToShow.length == 0){
+				res.redirect('/standings');
+
+			}else{
+				console.log(photosToShow);
+				var getRandomImage = Math.floor(Math.random() * photosToShow.length);
+				res.render('index', { carImage: photosToShow[getRandomImage].imageSrc });
+			}
+			
+		});
+
+
+		// //if the user result returns nothing, then the user hasn't voted on anything.
+		// 	// 4. load all docs into an array
+		// if(userResult.length == 0){
+		// 	// photosToShow = allPhotos;
+		// }else{
+		// 	// photosToShow = allPhotos;
+		// }
+		// // 5. pick a random one
+		// var getRandomImage = Math.floor(Math.random() * photosToShow.length);
+		// res.render('index', { carImage: allPhotos[getRandomImage] });
+		
 	});
 	// 3. find out which pics the user has voted on.
 	// 6. send the random pic to the view.
