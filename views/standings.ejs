@@ -1,0 +1,17 @@
+<% include head %>
+<header>
+<% include nav %>
+</header>
+<body>
+
+	<% for(i=0; i<theStandings.length; i++){ %>
+		<li class="list-unstyled text-center">
+			<img width="200" src="/images/<%= theStandings[i].imageSrc %>">
+			<p class=""><%=theStandings[i].totalVotes%></p>
+		</li>
+	<% } %>
+	
+
+</body>
+
+<% include footer %>s

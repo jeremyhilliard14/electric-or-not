@@ -55,6 +55,21 @@ router.get('/', function(req, res, next) {
   
 });
 
+router.get('/standings', function(req, res, next){
+	// res.send("you're on the standings page!");
+	// 1.  get all the photos.
+	// 2. sort them by the highest totals (negatives at the bottom)
+	// 3. res.render the standings view and pass it the sroted array.
+	db.collection('cars').find().toArray(function(error, result){
+		// console.log(result);
+		result.sort(function(a, b){
+			return (b.totalVotes - a.totalVotes);
+		})
+		// console.log(result);
+		res.render('standings', {theStandings: result});
+	})
+})
+
 router.post('/electric', function(req, res, next){
 	//res.send(req.body);
 
@@ -108,7 +123,7 @@ router.post('/notElectric', function(req, res, next){
 		db.collection('cars').updateOne(
 		{imageSrc: req.body.photo},
 		{
-			$set: {"totalVotes": (total + 1) }
+			$set: {"totalVotes": (total - 1) }
 		}, function(error, results){
 			// console.log(results);
 		}

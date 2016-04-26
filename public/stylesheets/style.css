@@ -14,3 +14,9 @@ img {
 .navbar {
   color: black;
 }
+
+/* line 1, ../../compass/sass/_standings.scss */
+img {
+  height: 250px;
+  width: 450px;
+}
