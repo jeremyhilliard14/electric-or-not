@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongo = require('mongodb');
 var mongoClient = mongo.MongoClient;
-var mongoUrl = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost:27017/electricOrNot';
+var mongoUrl = process.env.MONGODB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost:27017/electricOrNot';
 
 var db;
 var allPhotos;
@@ -36,9 +36,10 @@ router.get('/', function(req, res, next) {
 			}else{
 				console.log(photosToShow);
 				var getRandomImage = Math.floor(Math.random() * photosToShow.length);
-				res.render('index', { carImage: photosToShow[getRandomImage].imageSrc });
+				console.log(photosToShow[getRandomImage].imageSrc);
+				res.render('index', { carImage: photosToShow[getRandomImage] });
 			}
-			
+
 		});
 
 
@@ -155,6 +156,12 @@ router.post('/notElectric', function(req, res, next){
 	// 4.  update user table to include IP and pic they voted on.
 	// 5. update the images/cars collection by -1
 	// 6. send them back to the main page so they can vote again
+});
+
+router.post('/reset', function(req, res, next){
+	var currIP = req.ip;
+	db.collection('users').remove();
+	res.redirect('/');
 });
 
 module.exports = router;
