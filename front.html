@@ -1,0 +1,25 @@
+<div class="container" id="body-wrapper">
+        <div class="row" id="photos-wrapper">
+            <div class="col-sm-12 text-center">
+                <h1>A Node.JS voting game:</h1>
+                <h1>Is it electric?</h1>
+                <div class="col-sm-offset-3">
+	                <div class="col-sm-8 text-center" id="photo">
+	                    <img ng-src="{{cars}}" style="width: 100%;">
+                        <div id="button-holder">
+                            <div class="col-sm-12">
+                                <form class="col-sm-6 vote-button text-left" action="electric" method="post">
+                                    <input type="hidden" name="photo" value="<%=carImage%>">
+                                    <input type="submit" name="submit" class="btn btn-info" value="Electric!">
+                                </form>
+                                <form class="col-sm-6 vote-button text-right" action="poser" method="post">
+                                    <input type="hidden" name="photo" value="<%=carImage%>">
+                                    <input type="submit" class="btn btn-info" value="Poser">
+                                </form>
+                            </div>
+                        </div>
+	                </div>
+	            </div>
+            </div>
+        </div>
+    </div>
