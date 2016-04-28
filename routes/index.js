@@ -83,7 +83,7 @@ router.get('/standings', function(req, res, next){
 			return (b.totalVotes - a.totalVotes);
 		})
 		// console.log(result);
-		res.render('standings', {theStandings: result});
+		res.json( {theStandings: result});
 	})
 })
 

@@ -4,9 +4,9 @@
     <title></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-    <script type="text/javascript" src="/public/javascripts/angular-route.min.js"></script>
-    <script type="text/javascript" src="mainController.js"></script>
-    <script type="text/javascript" src="votingController.js"></script>
+    
+    <script type="text/javascript" src="front-end/mainController.js"></script>
+    <script type="text/javascript" src="front-end/votingController.js"></script>
 </head>
 <body ng-controller="mainController">
     <nav class="nav navbar-default navbar-fixed-top" role="navigation">
@@ -60,9 +60,12 @@
     </nav>
  
 
-    <div ng-view></div>
+    <div ng-repeat="image in theStandings">
+            <img ng-src="public/images/{{image.imageSrc}}" style="height: 200px; width: 350px; margin-bottom: 15px">
+            <p>{{image.totalVotes}}</p>
+    </div>
 
-</body>
+</body><!-- public/images/{{image}} -->
 </html>
 
 
