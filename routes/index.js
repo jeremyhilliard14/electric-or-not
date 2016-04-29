@@ -37,7 +37,7 @@ router.get('/', function(req, res, next) {
 				console.log(photosToShow);
 				var getRandomImage = Math.floor(Math.random() * photosToShow.length);
 				console.log(photosToShow[getRandomImage].imageSrc);
-				res.render('index', { carImage: photosToShow[getRandomImage] });
+				res.json({ carImage: photosToShow[getRandomImage] });
 			}
 
 		});

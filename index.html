@@ -34,7 +34,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="active" href="./standings">
+                    <a class="active" ng-click="standingsPage()" href="">
                         <span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Standings
                     </a>
                 </li>
@@ -59,10 +59,31 @@
         </div><!-- /.navbar-collapse -->
     </nav>
  
+    <div id="voting-wrapper" class="col-sm-offset-3">
+        <div class="col-sm-8 text-center">
+            <h1>Electric or Not!</h1>
+            <img src="public/images/{{imageSrc}}" style="height: 400px; width: 100%">
+            <div id="button-holder" class="col-sm-12" style="padding: 0;">
+                <div class="col-sm-6 text-left" style="padding: 0;">
+                    <form class="vote-button" action="electric" method="post">
+                        <input type="hidden" name="photo" value="<%= carImage.imageSrc %>">
+                        <input type="submit" name="submit" class="btn btn-info" value="Electric!">
+                    </form>
+                </div>
+                <div class="col-sm-6 text-right" style="padding: 0;">
+                    <form class="vote-button" action="notElectric" method="post">
+                        <input type="hidden" name="photo" value="<%= carImage.imageSrc %>">
+                        <input type="submit" name="submit" class="btn btn-info" value="Not Electric!">
+                    </form>
+                </div>
+            </div>
+        </div>
 
-    <div ng-repeat="image in theStandings">
+    </div>
+
+    <div ng-repeat="image in theStandings" style="text-align: center">
             <img ng-src="public/images/{{image.imageSrc}}" style="height: 200px; width: 350px; margin-bottom: 15px">
-            <p>{{image.totalVotes}}</p>
+            <p>Votes: {{image.totalVotes}}</p>
     </div>
 
 </body><!-- public/images/{{image}} -->
