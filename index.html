@@ -24,7 +24,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a class="active" href="./">
+                    <a class="active" ng-click="vote()" href="">
                         <span class="glyphicon glyphicon-print"></span> Vote!
                     </a>
                 </li>
@@ -54,19 +54,19 @@
         </div><!-- /.navbar-collapse -->
     </nav>
  
-    <div id="voting-wrapper" class="col-sm-offset-3" style="margin-top: 50px">
+    <div id="voting-wrapper" class="col-sm-offset-3" style="margin-top: 50px; display: block">
         <div class="col-sm-8 text-center">
             <h1>Electric or Not!</h1>
             <img src="public/images/{{imageSrc}}" style="height: 400px; width: 100%">
             <div id="button-holder" class="col-sm-12" style="padding: 0;">
                 <div class="col-sm-6 text-left" style="padding: 0;">
-                    <form class="vote-button" action="electric" method="post">
-                        <input type="hidden" name="photo" value="<%= carImage.imageSrc %>">
-                        <input type="submit" name="submit" class="btn btn-info" value="Electric!">
+                    <form class="vote-button" action="electric" method="get">
+                        <input type="hidden" name="photo" value="{{carImage.imageSrc}}">
+                        <input type="submit" name="submit" class="btn btn-info" value="Electric!" ng-click="electric()">
                     </form>
                 </div>
                 <div class="col-sm-6 text-right" style="padding: 0;">
-                    <form class="vote-button" action="notElectric" method="post">
+                    <form class="vote-button" action="notElectric" method="get">
                         <input type="hidden" name="photo" value="<%= carImage.imageSrc %>">
                         <input type="submit" name="submit" class="btn btn-info" value="Not Electric!">
                     </form>
@@ -75,7 +75,7 @@
         </div>
 
     </div>
-    <div class="col-sm-12" style="margin-top: 50px;">
+    <div id="standings" class="col-sm-12" style="margin-top: 50px; display: none">
         <div ng-repeat="image in theStandings" style="float: left; font-size: 25px; text-align: center">
                 <img ng-src="public/images/{{image.imageSrc}}" style="height: 200px; width: 350px; margin: 15px 50px">
                 <p>Votes: {{image.totalVotes}}</p>

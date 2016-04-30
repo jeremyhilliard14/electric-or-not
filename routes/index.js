@@ -108,6 +108,7 @@ router.post('/electric', function(req, res, next){
 			$set: {"totalVotes": (total + 1) }
 		}, function(error, results){
 			// console.log(results);
+			res.json(results);
 		}
 	);
 	})
